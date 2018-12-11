@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+   <population>
+      <size>30</size>
+   </population>
+   <mutation>
+      <propability>0.1</propability>
+   </mutation>
+   <crossing>
+      <propability>0.1</propability>
+   </crossing>
+   <selection>
+      <size>30</size>
+   </selection>
+   <alfa>1</alfa>
+   <beta>0.5</beta>
+   <target>98</target>
+</configuration>
