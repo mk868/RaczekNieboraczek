@@ -4,12 +4,13 @@ import math
 
 class tsp(object):
     """description of class"""
-    def __init__(self,classes, genNumber, classIndex, pair):
+    def __init__(self,classes, genNumber, classIndex, pair, method):
         self.serialVersionUID = 1
         self.classes = classes
         self.genNumber = genNumber
         self.classIndex = classIndex
         self.pair = pair
+        self.method = method
 
     def buildClassifier(self, instances):
         if instances.numClasses() > 2 :
@@ -35,11 +36,18 @@ class tsp(object):
             self.classes[classValue].addIndex(index)
             index = index + 1
 
-    def indicator(self,firstValue,secondValue):
-        if firstValue<secondValue:
-            return true
-        else:
-            return false
+    def indicator(self,firstValue,secondValue, method):
+        if method == '>':
+           if firstValue<secondValue:
+                 return true
+           else:
+                return false
+        if method == '<':
+            if firstValue<secondValue:
+                return true
+            else:
+                return false
+       
 
     def computeSingleDelta(self,instances, i, j):
          positivePropability = self.computeFirstPropability(classes[0],instances,i,j)
@@ -50,7 +58,7 @@ class tsp(object):
         sum = 0
         for val in classAttr.getRowsIndexes():
             instance = instances.instance(val)
-            if indicator(instance.value(i), instance.value(j)):
+            if indicator(instance.value(i), instance.value(j), self.method):
                 sum = sum +1
         return (1.0/classAttr.getNumberOfRows())*sum
 
