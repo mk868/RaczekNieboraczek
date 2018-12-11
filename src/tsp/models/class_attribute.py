@@ -10,8 +10,6 @@ class ClassAttribute(object):
         self.rowsIndexes = rowsIndexes
 
     def addIndex(self, index):
-        if not self.rowsIndexes:   
-            rowsIndexes = TreeSet([])
         rowsIndexes.add(index)
 
     def plus(self):
