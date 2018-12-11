@@ -71,10 +71,15 @@ class Chromosome:
            self.genes[realOffset + i] = compList[i]
     
     def toReadableForm(self):
-        num1 = self.getPocket(0)
-        num2 = self.getPocket(1)
-        comp = self.getComp(0)
-        return [num1, comp, num2]
+        result = []
+        for i in range(0, 1):
+            result.append(
+            {
+                'gene1': self.getPocket(0),
+                'gene2': self.getPocket(1),
+                'method': self.getComp(0)
+            })
+        return result
         
 
     def __str__(self):

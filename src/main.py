@@ -26,11 +26,11 @@ def checkQuality(data): #mock for TSP rule check
     10 < 100 = 100%
     """
     result = 0
-    if data[1] == '<':
+    if data[0]['method'] == '<':
         result += 0.10
     
-    dis1 = 0.45 - (abs(data[0] - 10)) / 50
-    dis2 = 0.45 - (abs(data[2] - 100)) / 50
+    dis1 = 0.45 - (abs(data[0]['gene1'] - 10)) / 50
+    dis2 = 0.45 - (abs(data[0]['gene2'] - 100)) / 50
 
     if dis1 > 0:
         result += dis1
