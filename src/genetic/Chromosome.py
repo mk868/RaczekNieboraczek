@@ -9,11 +9,12 @@ class Chromosome:
     pocketSize = 3
     """
 
-    def __init__(self, pocketSize):
+    def __init__(self, pocketSize, comparisonsCount):
         self.quality = 0 #init value
         self.pocketSize = pocketSize
         self.compSize = 2
-        self.totalSize = pocketSize * 2 + self.compSize
+        self.comparisonsCount = comparisonsCount
+        self.totalSize = (pocketSize * 2 + self.compSize) * self.comparisonsCount
         self.genes = [0] * self.totalSize
         self.comps = ['>', '<', '>=', '==', '<=', '!='] # used elements count: 2 ^ self.compSize
     
@@ -29,41 +30,50 @@ class Chromosome:
             if random.random() < probability:
                 self.genes[i] = 1 - self.genes[i]
 
-    def cross(ch1, ch2):
-        newCh1 = Chromosome(ch1.pocketSize)
-        newCh1.setComp(0, ch1.getComp(0))
-        newCh1.setPocket(0, ch1.getPocket(0))
-        newCh1.setPocket(1, ch2.getPocket(1))
+    def cross(self, ch2):
+        ch1 = self
+        newCh1 = Chromosome(ch1.pocketSize, self.comparisonsCount)
+        newCh2 = Chromosome(ch1.pocketSize, self.comparisonsCount)
+        for i in range(0, self.comparisonsCount):
+            pocket1Position = 0 + i * 2
+            pocket2Position = 1 + i * 2
+            compPosition = i
 
-        newCh2 = Chromosome(ch1.pocketSize)
-        newCh2.setComp(0, ch2.getComp(0))
-        newCh2.setPocket(0, ch2.getPocket(0))
-        newCh2.setPocket(1, ch1.getPocket(1))
+            newCh1.setComp(compPosition, ch1.getComp(compPosition))
+            newCh1.setPocket(pocket1Position, ch1.getPocket(pocket1Position))
+            newCh1.setPocket(pocket2Position, ch2.getPocket(pocket2Position))
+
+            newCh2.setComp(compPosition, ch2.getComp(compPosition))
+            newCh2.setPocket(pocket1Position, ch2.getPocket(pocket1Position))
+            #newCh2.setPocket(pocket2Position, ch1.getPocket(pocket2Position))
+        
         return (newCh1, newCh2)
     
     def getPocket(self, offset):
-        realOffset = offset * (self.pocketSize + self.compSize)
+        comparisonNum = offset // 2
+        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + offset % 2
         pocket = self.genes[realOffset: realOffset + self.pocketSize]
         num = ListIntConverter.List2Int(pocket)
         
         return num
 
     def setPocket(self, offset, num):
-        realOffset = offset * (self.pocketSize + self.compSize)
+        comparisonNum = offset // 2
+        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + offset % 2
         pocket = ListIntConverter.Int2List(num, self.pocketSize)
 
         for i in range(0, self.pocketSize):
             self.genes[realOffset + i] = pocket[i]
     
     def getComp(self, offset):
-        realOffset = self.pocketSize + offset * (self.pocketSize + self.compSize)
+        realOffset = self.pocketSize + offset * (self.pocketSize * 2 + self.compSize)
         comp = self.genes[realOffset: realOffset + self.compSize]
         compNum = ListIntConverter.List2Int(comp)
 
         return self.comps[compNum % len(self.comps)]
 
     def setComp(self, offset, comp):
-        realOffset = self.pocketSize + offset * (self.pocketSize + self.compSize)
+        realOffset = self.pocketSize + offset * (self.pocketSize * 2 + self.compSize)
         compNum = self.comps.index(comp)
         compList = ListIntConverter.Int2List(compNum, self.compSize)
 
@@ -72,12 +82,12 @@ class Chromosome:
     
     def toReadableForm(self):
         result = []
-        for i in range(0, 1):
+        for i in range(0, self.comparisonsCount):
             result.append(
             {
-                'gene1': self.getPocket(0),
-                'gene2': self.getPocket(1),
-                'method': self.getComp(0)
+                'gene1': self.getPocket(0 + i * 2),
+                'gene2': self.getPocket(1 + i * 2),
+                'method': self.getComp(i)
             })
         return result
         

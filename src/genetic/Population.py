@@ -3,16 +3,17 @@ from .Chromosome import Chromosome
 
 class Population:
 
-    def __init__(self, size, pocketSize):
+    def __init__(self, size, pocketSize, comparisonsCount):
         self.pocketSize = pocketSize
         self.generation = 0
         self.size = size
         self.chromosomes = [None] * self.size
+        self.comparisonsCount = comparisonsCount
         self.qualityChecker = None
 
     def fillRandomly(self):
         for i in range(0, self.size):
-            ch = Chromosome(self.pocketSize)
+            ch = Chromosome(self.pocketSize, self.comparisonsCount)
             ch.fillRandomly()
             self.chromosomes[i] = ch
         self.checkQuality()
@@ -72,4 +73,8 @@ class Population:
         for chromosome in self.chromosomes:
             print(' Chromosome #' + str(i) + ' ' + str(chromosome.toReadableForm()) + ' Quality: ' + str(chromosome.quality))
             i += 1
+
+    def printBest(self):
+        bestChromosome = self.chromosomes[0]
+        print(' Best Chromosome ' + str(bestChromosome.toReadableForm()) + ' Quality: ' + str(bestChromosome.quality))
         
