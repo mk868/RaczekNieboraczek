@@ -1,6 +1,10 @@
 import sys
 import Configuration
+import xml.etree.ElementTree as ET
 from genetic.Population import Population
+
+tree = ET.parse('configuration.xml')
+root = tree.getroot()
 
 """
 if len(sys.argv) < 2:
@@ -9,10 +13,14 @@ if len(sys.argv) < 2:
     exit(1)
 """
 
-POPULATION_SIZE = 10
-SELECTION_SIZE = 5
+POPULATION_SIZE = int(root.find('population').find('size').text)
+SELECTION_SIZE = int(root.find('selection').find('size').text)
 POCKET_SIZE = 7 #TODO: floor(log2(TSPgenesCount)) + 1
-MUTATION_PROBABILITY = 0.01
+MUTATION_PROBABILITY = float(root.find('mutation').find('propability').text)
+CROSSING_PROBABILITY = float(root.find('crossing').find('propability').text)
+TARGET = float(root.find('target').text)
+ALFA = float(root.find('alfa').text)
+BETA = float(root.find('beta').text)
 
 def checkQuality(data): #mock for TSP rule check
     """
