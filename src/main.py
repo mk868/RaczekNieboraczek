@@ -16,6 +16,7 @@ TARGET = float(root.find('target').text)
 ALFA = float(root.find('alfa').text)
 BETA = float(root.find('beta').text)
 comparisonsCount = int(root.find('comparison').find('count').text)
+EVOLUTION_LENGTH = int(root.find('evolution').find('length').text)
 
 def checkQuality(data): #mock for TSP rule check
     """
