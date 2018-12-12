@@ -9,12 +9,14 @@ root = tree.getroot()
 
 POPULATION_SIZE = int(root.find('population').find('size').text)
 SELECTION_SIZE = int(root.find('selection').find('size').text)
+SELECTION_TYPE = root.find('selection').find('type').text
 POCKET_SIZE = 7 #TODO: floor(log2(TSPgenesCount)) + 1
 MUTATION_PROBABILITY = float(root.find('mutation').find('propability').text)
 CROSSING_PROBABILITY = float(root.find('crossing').find('propability').text)
 TARGET = float(root.find('target').text)
 ALFA = float(root.find('alfa').text)
 BETA = float(root.find('beta').text)
+GAMMA = float(root.find('gamma').text)
 comparisonsCount = int(root.find('comparison').find('count').text)
 EVOLUTION_LENGTH = int(root.find('evolution').find('length').text)
 
