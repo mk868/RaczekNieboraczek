@@ -45,13 +45,13 @@ class Chromosome:
 
             newCh2.setComp(compPosition, ch2.getComp(compPosition))
             newCh2.setPocket(pocket1Position, ch2.getPocket(pocket1Position))
-            #newCh2.setPocket(pocket2Position, ch1.getPocket(pocket2Position))
+            newCh2.setPocket(pocket2Position, ch1.getPocket(pocket2Position))
         
         return (newCh1, newCh2)
     
     def getPocket(self, offset):
         comparisonNum = offset // 2
-        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + offset % 2
+        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + (offset % 2) * (self.pocketSize + self.compSize) 
         pocket = self.genes[realOffset: realOffset + self.pocketSize]
         num = ListIntConverter.List2Int(pocket)
         
@@ -59,7 +59,7 @@ class Chromosome:
 
     def setPocket(self, offset, num):
         comparisonNum = offset // 2
-        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + offset % 2
+        realOffset = comparisonNum * (self.pocketSize * 2 + self.compSize) + (offset % 2) * (self.pocketSize + self.compSize) 
         pocket = ListIntConverter.Int2List(num, self.pocketSize)
 
         for i in range(0, self.pocketSize):

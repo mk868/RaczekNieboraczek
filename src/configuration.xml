@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
    <population>
-      <size>30</size>
+      <size>20</size>
    </population>
    <mutation>
-      <propability>0.1</propability>
+      <propability>0.2</propability>
    </mutation>
    <crossing>
-      <propability>0.1</propability>
+      <propability>0.9</propability>
    </crossing>
    <selection>
-      <size>30</size>
+      <size>10</size>
       <type>rulete</type>
       <!-- rulete, tournament, ranking -->
    </selection>
    <alfa>1</alfa>
    <beta>0.5</beta>
    <gamma>0.01</gamma>
-   <target>98</target>
+   <target>0.98</target>
    <comparison>
-	  <count>4</count>
+	  <count>2</count>
    </comparison>
    <evolution>
-      <length>100</length>
+      <length>1000</length>
    </evolution>
 </configuration>

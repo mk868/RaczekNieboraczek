@@ -55,11 +55,12 @@ population.setQualityChecker(checkQuality)
 population.fillRandomly()
 
 #population.print()
-for i in range(0, 1000):
-    population.nextGeneration(SELECTION_SIZE, MUTATION_PROBABILITY)
+for i in range(0, EVOLUTION_LENGTH):
+    population.nextGeneration(SELECTION_SIZE, CROSSING_PROBABILITY, MUTATION_PROBABILITY)
     if population.isFound(TARGET):
         break
-
+#population.print()
+print('Generation: ' + str(population.generation))
 population.printBest()
 
 

@@ -25,7 +25,7 @@ class Population:
     def sort(self):
         self.chromosomes.sort(key = lambda x: x.quality, reverse = True)
 
-    def nextGeneration(self, selectionSize, mutationProbability):
+    def nextGeneration(self, selectionSize, crossProbability, mutationProbability):
         self.generation += 1
 
         #selection
@@ -36,10 +36,14 @@ class Population:
         for chromosome in self.chromosomes:
             chromosome.mutate(mutationProbability)
         
+        #cross
         chromosomesSize = len(self.chromosomes)
         for i in range(0, chromosomesSize, 2):
             ch1 = self.chromosomes[i]
             ch2 = self.chromosomes[i + 1]
+
+            if(random.random() >= crossProbability):
+                continue
 
             children = ch1.cross(ch2)
 
