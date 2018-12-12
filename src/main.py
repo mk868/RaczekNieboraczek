@@ -15,7 +15,7 @@ CROSSING_PROBABILITY = float(root.find('crossing').find('propability').text)
 TARGET = float(root.find('target').text)
 ALFA = float(root.find('alfa').text)
 BETA = float(root.find('beta').text)
-comparisonsCount = 4 #todo read from config
+comparisonsCount = int(root.find('comparison').find('count').text)
 
 def checkQuality(data): #mock for TSP rule check
     """

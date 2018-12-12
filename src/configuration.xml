@@ -15,4 +15,7 @@
    <alfa>1</alfa>
    <beta>0.5</beta>
    <target>98</target>
+   <comparison>
+	  <count>4</count>
+   </comparison>
 </configuration>
