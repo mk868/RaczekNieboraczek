@@ -14,12 +14,18 @@
       <type>rulete</type>
       <!-- rulete, tournament, ranking -->
    </selection>
-   <alfa>1</alfa>
-   <beta>0.5</beta>
+   <alpha>
+      <initValue>1</initValue>
+      <length>10</length><!-- max length of bin representation -->
+   </alpha>
+   <beta>
+      <initValue>1</initValue>
+      <length>10</length><!-- max length of bin representation -->
+   </beta>
    <gamma>0.01</gamma>
    <target>0.98</target>
    <comparison>
-	  <count>2</count>
+	  <count>1</count>
    </comparison>
    <evolution>
       <length>1000</length>
