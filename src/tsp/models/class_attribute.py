@@ -3,7 +3,6 @@ from treeset import TreeSet
 class ClassAttribute(object):
     """description of class"""
     def __init__(self, index, name, numberOfRows, rowsIndexes):
-        self.serialVersionUID = 1
         self.index = index
         self.name = name
         self.numberOfRows = numberOfRows

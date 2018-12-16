@@ -1,13 +1,4 @@
 class Pair(object):
-    """description of class"""
-    def __init__(self, x, y, delta, xPropability, yPropability,secondDelta):
-        self.x = x
-        self.y = y
-        self.delta = delta
-        self.positivePropability = xPropability
-        self.negativePropability = yPropability
-        self.secondDelta = secondDelta
-
     def __init__(self, x, y, delta, xPropability, yPropability):
         self.x = x
         self.y = y
@@ -15,12 +6,6 @@ class Pair(object):
         self.positivePropability = xPropability
         self.negativePropability = yPropability
 
-
-    def __init__(self, x, y, delta):
-        self.x = x 
-        self.y = y
-        self.delta = delta
-        
 
     def getX(self):
         return self.x
