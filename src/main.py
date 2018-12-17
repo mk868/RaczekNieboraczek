@@ -3,23 +3,24 @@ from Configuration import Configuration
 from genetic.Population import Population
 from genetic.ChromosomeConfig import ChromosomeConfig
 import math
-from mockTSP import MockTSP
+from tsp import tsp
 
 config = Configuration()
 config.load('configuration.xml')
 
-mockTSP = MockTSP()
+TSP = tsp(filePath)
+TSP.buildClassifier(TSP.instances)
 
 chromosomeConfig = ChromosomeConfig()
 chromosomeConfig.alphaLength = config.alphaLength
 chromosomeConfig.alphaInitValue = config.alphaInitValue
 chromosomeConfig.betaLength = config.betaLength
 chromosomeConfig.betaInitValue = config.betaInitValue
-chromosomeConfig.geneLength = math.floor(math.log2(mockTSP.count)) + 1
+chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) + 1
 
 population = Population(config.populationSize)
 
-population.setQualityChecker(mockTSP.checkFitness)
+population.setQualityChecker(TSP.checkFitness(data))
 population.fillRandomly(chromosomeConfig, config.comparisonsCount)
 
 #population.print()

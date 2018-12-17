@@ -7,7 +7,7 @@ import math
 class tsp(object):
     classes = []
     def __init__(self,path):
-         self.instances = fildereader.load_data('A:/Studia/MAGISTERKA/Zaawansowana inżynieria oprogramowania/Prosty algorytm TSP/TSP/dane/format2/baza_01_train.csv')
+         self.instances = fildereader.load_data(path)
         
 
 
@@ -141,5 +141,5 @@ class tsp(object):
                        
 tsp = tsp('xd')
 tsp.buildClassifier(tsp.instances)
-print(tsp.checkFitness([{'alfa':1, 'beta':0.1, 'gene1':12, 'gene2':2,'method': '<'}]),' - Wzor')
+print(tsp.checkFitness([{'alfa':1, 'beta':0.1, 'gene1':16, 'gene2':23,'method': '<'}]),' - Wzor')
         
