@@ -32,7 +32,6 @@ class Instances(object):
             if  not instance.className in classes and instance.className != 'init':
                 classes.append(instance.className)
                 sum += 1
-        #print(classes)
         return {'count':sum,'classes':classes}
 
     def numAttributes(self):
@@ -81,12 +80,3 @@ def load_data(path):
         instances.append(instance)
         instancesObject = Instances(instances)
     return instancesObject
-
-
-    #print(instances[0].className)
-    #print(instances[0].args[0])
-    #print(instances[0].args_names[24480])
-    #print(instancesObject.numClasses())
-    #print(instancesObject.numAttributes())
-
-
