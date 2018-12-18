@@ -1,4 +1,4 @@
-from treeset import TreeSet
+from tsp.models.treeset import TreeSet
 
 class ClassAttribute(object):
     """description of class"""

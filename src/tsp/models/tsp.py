@@ -1,13 +1,12 @@
-from class_attribute import ClassAttribute
-from pair import Pair
-from fildereader import Instance, Instances
-import fildereader
+from tsp.models.class_attribute import ClassAttribute
+from tsp.models.pair import Pair
+import tsp.models.fildereader
 import math
 
-class tsp(object):
+class TSP(object):
     classes = []
     def __init__(self,path):
-         self.instances = fildereader.load_data(path)
+         self.instances = tsp.models.fildereader.load_data(path)
         
 
 
@@ -74,7 +73,7 @@ class tsp(object):
                 sum = sum +1
         return (1.0/classAttr.getNumberOfRows())*sum
 
-    #Może mało optymalna ale działać powinna działać ;) 
+
     def checkFitness(self, data): 
             result = 0
             alfaSum = 0
@@ -89,14 +88,15 @@ class tsp(object):
                     for dataElement in data: 
                         if len(self.instances.instances[0].args) < int(dataElement['gene1']) or len(self.instances.instances[0].args) < int(dataElement['gene2']):
                             return result
-                   
-                        alfa = dataElement['alfa']
+                        
+                        alfa = dataElement['alpha']
                         alfaSum += alfa 
                         beta = dataElement['beta']
                         gene1Index = dataElement['gene1']
                         gene2Index = dataElement['gene2']
                         method = dataElement['method']
-
+                        
+                        dlugosc = len(self.instances.instances[index].args)
                         gene1Value = alfa * (beta + float(self.instances.instances[index].args[gene1Index])) 
                         gene2Value = float(self.instances.instances[index].args[gene2Index])
                         #print(self.instances.instances[index].args[gene1Index],'=',gene1Value,';',self.instances.instances[index].args[gene2Index],'=',gene2Value)
@@ -104,12 +104,13 @@ class tsp(object):
                             temp = 1
                         else: temp = 0
                         tempNumerator += alfa * temp
-                        resultClass0 = tempNumerator/alfaSum
-                        resultClass0 = resultClass0/self.rowsForClasses[self.classes[0].name]
+                        if alfa != 0:
+                            resultClass0 = tempNumerator/alfaSum
+                            resultClass0 = resultClass0/self.rowsForClasses[self.classes[0].name]
                         
             for index in self.rowsIndexesForClasses[self.classes[1].name]:
                     for dataElement in data: 
-                        alfa = dataElement['alfa']
+                        alfa = dataElement['alpha']
                         alfaSum += alfa 
                         beta = dataElement['beta']
                         gene1Index = dataElement['gene1']
@@ -123,23 +124,12 @@ class tsp(object):
                             temp = 1
                         else: temp = 0
                         tempNumerator += alfa * temp
-                        resultClass1 = tempNumerator/alfaSum
-                        resultClass1 = resultClass1/self.rowsForClasses[self.classes[1].name]
+                        if alfa != 0:
+                            resultClass1 = tempNumerator/alfaSum
+                            resultClass1 = resultClass1/self.rowsForClasses[self.classes[1].name]
 
             result = abs(resultClass0 - resultClass1)
-            #            pair = self.computeSingleDelta(self.instances, gene1, gene2,method)
-            #            gene1Value = alfa * (beta + float(instance.args[gene1])) 
-            #            gene2Value = float(instance.args[gene2])
-            #            if gene1Value < gene2Value:
-            #                goodRule += 1
-             
-            #print(pair.delta ,' - TSP')   
-            #result = (goodRule / rulesNum)/100
+        
             return result # range: 0..1   (0-100%)
                     
-                   
-                       
-tsp = tsp('xd')
-tsp.buildClassifier(tsp.instances)
-print(tsp.checkFitness([{'alfa':1, 'beta':0.1, 'gene1':16, 'gene2':23,'method': '<'}]),' - Wzor')
-        
+  
