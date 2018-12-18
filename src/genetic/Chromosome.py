@@ -29,9 +29,9 @@ class Chromosome:
         ''' random '''
         for i in range(0, self.totalSize):
             if random.random() >= 0.5:
-                self.genes[i] = 1
+                self.genes[i] = True
             else:
-                self.genes[i] = 0
+                self.genes[i] = False
         ''' init default alpha & beta '''
         for i in range(0, self.comparisonsCount):
             self.setAlpha(i, self.config.alphaInitValue)
