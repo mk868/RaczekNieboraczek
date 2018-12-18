@@ -4,6 +4,7 @@ from Configuration import Configuration
 from genetic.Population import Population
 from genetic.ChromosomeConfig import ChromosomeConfig
 import math
+import time
 from tsp.models.tsp import TSP
 
 config = Configuration()
@@ -16,29 +17,31 @@ if len(sys.argv) > 1:
 
 if not os.path.exists(filePath):
      raise Exception('File does not exists')
-else:        
-    TSP = TSP(filePath)
-    TSP.buildClassifier(TSP.instances)
+  
+TSP = TSP(filePath)
+TSP.buildClassifier(TSP.instances)
 
-    chromosomeConfig = ChromosomeConfig()
-    chromosomeConfig.alphaLength = config.alphaLength
-    chromosomeConfig.alphaInitValue = config.alphaInitValue
-    chromosomeConfig.betaLength = config.betaLength
-    chromosomeConfig.betaInitValue = config.betaInitValue
-    chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) #+ 1
+chromosomeConfig = ChromosomeConfig()
+chromosomeConfig.alphaLength = config.alphaLength
+chromosomeConfig.alphaInitValue = config.alphaInitValue
+chromosomeConfig.betaLength = config.betaLength
+chromosomeConfig.betaInitValue = config.betaInitValue
+chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) #+ 1
 
-    population = Population(config.populationSize)
+population = Population(config.populationSize)
 
-    population.setQualityChecker(TSP.checkFitness)
-    population.fillRandomly(chromosomeConfig, config.comparisonsCount)
+population.setQualityChecker(TSP.checkFitness)
+population.fillRandomly(chromosomeConfig, config.comparisonsCount)
 
-    #population.print()
-    for i in range(0, config.evolutionLength):
-        population.nextGeneration(config.selectionSize, config.crossingProbability, config.mutationProbability)
-        if population.isFound(config.targetProbability):
-            break
-    #population.print()
-    print('Generation: ' + str(population.generation))
-    population.printBest()
 
+start_time = time.time()
+#population.print()
+for i in range(0, config.evolutionLength):
+    population.nextGeneration(config.selectionSize, config.crossingProbability, config.mutationProbability)
+    if population.isFound(config.targetProbability):
+        break
+#population.print()
+print('Generation: ' + str(population.generation))
+population.printBest()
+print('TIME: ' + str(round(time.time() - start_time, 2)))
 

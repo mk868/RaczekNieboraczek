@@ -41,7 +41,7 @@ class Chromosome:
     def mutate(self, probability):
         for i in range(0, self.totalSize):
             if random.random() < probability:
-                self.genes[i] = 1 - self.genes[i]
+                self.genes[i] = not(self.genes[i])
 
     def cross(self, ch2):
         ch1 = self
