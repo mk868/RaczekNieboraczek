@@ -4,10 +4,10 @@
       <size>20</size>
    </population>
    <mutation>
-      <propability>0.2</propability>
+      <propability>0.1</propability>
    </mutation>
    <crossing>
-      <propability>0.9</propability>
+      <propability>0.7</propability>
    </crossing>
    <selection>
       <size>10</size>
@@ -19,18 +19,19 @@
       <length>10</length><!-- max length of bin representation -->
    </alpha>
    <beta>
-      <initValue>1</initValue>
+      <initValue>0</initValue>
       <length>10</length><!-- max length of bin representation -->
    </beta>
    <gamma>0.01</gamma>
    <target>0.98</target>
    <comparison>
-	  <count>1</count>
+	  <count>5</count>
+     <length>1</length><!-- max length of bin representation -->
    </comparison>
    <evolution>
       <length>10000</length>
    </evolution>
   <defaultFilePath>
-    <path>C:/file1.csv</path>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>
   </defaultFilePath>
 </configuration>

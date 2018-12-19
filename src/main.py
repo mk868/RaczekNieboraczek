@@ -27,6 +27,7 @@ chromosomeConfig.alphaInitValue = config.alphaInitValue
 chromosomeConfig.betaLength = config.betaLength
 chromosomeConfig.betaInitValue = config.betaInitValue
 chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) #+ 1
+chromosomeConfig.compLength = config.compLength
 
 population = Population(config.populationSize)
 

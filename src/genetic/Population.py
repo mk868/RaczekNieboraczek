@@ -1,6 +1,7 @@
 import random
 from .Chromosome import Chromosome
 
+
 class Population:
 
     def __init__(self, size):
@@ -11,30 +12,31 @@ class Population:
 
     def fillRandomly(self, chromosomeConfig, comparisonsCount):
         for i in range(0, self.size):
-            ch = Chromosome(chromosomeConfig, comparisonsCount)
+            ch = Chromosome(chromosomeConfig, 1 + int(
+                random.random() * (comparisonsCount - 1)))
             ch.fillRandomly()
             self.chromosomes[i] = ch
         self.checkQuality()
         self.sort()
-    
+
     def setQualityChecker(self, qualityChecker):
         self.qualityChecker = qualityChecker
 
     def sort(self):
-        self.chromosomes.sort(key = lambda x: x.quality, reverse = True)
+        self.chromosomes.sort(key=lambda x: x.quality, reverse=True)
 
     def nextGeneration(self, selectionSize, crossProbability, mutationProbability):
         self.generation += 1
 
-        #selection
-        while len(self.chromosomes) > selectionSize:            
+        # selection
+        while len(self.chromosomes) > selectionSize:
             self.chromosomes.pop()
 
-        #mutation
+        # mutation
         for chromosome in self.chromosomes:
             chromosome.mutate(mutationProbability)
-        
-        #cross
+
+        # cross
         chromosomesSize = len(self.chromosomes)
         for i in range(0, chromosomesSize, 2):
             ch1 = self.chromosomes[i]
@@ -51,9 +53,9 @@ class Population:
         self.checkQuality()
         self.sort()
 
-        while len(self.chromosomes) > self.size:            
+        # do poprawy !!!!!!
+        while len(self.chromosomes) > self.size:
             self.chromosomes.pop()
-
 
     def mutate(self, probability):
         for chromosome in self.chromosomes:
@@ -62,9 +64,10 @@ class Population:
     def checkQuality(self):
         if not self.qualityChecker:
             return
-        
+
         for chromosome in self.chromosomes:
-            chromosome.quality = self.qualityChecker(chromosome.toReadableForm())
+            chromosome.quality = self.qualityChecker(
+                chromosome.toReadableForm())
 
     def isFound(self, minProbability):
         return self.chromosomes[0].quality >= minProbability
@@ -73,10 +76,11 @@ class Population:
         i = 0
         print('Generation: ' + str(self.generation))
         for chromosome in self.chromosomes:
-            print(' Chromosome #' + str(i) + ' ' + str(chromosome.toReadableForm()) + ' Quality: ' + str(chromosome.quality))
+            print(' Chromosome #' + str(i) + ' ' + str(chromosome.toReadableForm()
+                                                       ) + ' Quality: ' + str(chromosome.quality))
             i += 1
 
     def printBest(self):
         bestChromosome = self.chromosomes[0]
-        print(' Best Chromosome ' + str(bestChromosome.toReadableForm()) + ' Quality: ' + str(bestChromosome.quality))
-        
+        print(' Best Chromosome ' + str(bestChromosome.toReadableForm()
+                                        ) + ' Quality: ' + str(bestChromosome.quality))

@@ -19,10 +19,10 @@ class Chromosome:
         self.comparisonsCount = comparisonsCount
 
         self.quality = 0 #init value
-        self.compLength = 2
+        self.compLength = self.config.compLength
         self.comparisonLength = self.config.geneLength * 2 + self.config.alphaLength + self.config.betaLength + self.config.compLength
         self.totalSize = self.comparisonLength * self.comparisonsCount
-        self.comps = ['>', '<', '>=', '==', '<=', '!='] # used elements count: 2 ^ self.compSize
+        self.comps = ['>', '<=', '<', '>=', '==', '!='] # used elements count: 2 ^ self.compSize
         self.genes = [0] * self.totalSize
     
     def fillRandomly(self):

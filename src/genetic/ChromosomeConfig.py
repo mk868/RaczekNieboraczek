@@ -6,7 +6,7 @@ class ChromosomeConfig:
         self.alphaInitValue = 0
         self.betaLength = 0
         self.betaInitValue = 0
-        self.compLength = 2
+        self.compLength = 1
 
     def __str__(self):
         return ('geneLength: ' + str(geneLength) +
