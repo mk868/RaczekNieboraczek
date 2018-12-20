@@ -74,14 +74,17 @@ class Chromosome:
     def cross(self, ch2):
         ch1 = self
 
-        newCh1 = Chromosome(self.config, random.randint(1, int((ch1.comparisonsCount + ch2.comparisonsCount) / 2)))
-        ch2genUsed = []
+        newCh1 = Chromosome(self.config, random.randint(1, ch1.comparisonsCount + ch2.comparisonsCount))
+        ch2genAvaliable = []
+
+        for ch2number in range(ch2.comparisonsCount):
+            ch2genAvaliable.append(ch2number)
+
         for i in range(0, newCh1.comparisonsCount):
-            if(i in range(min(ch1.comparisonsCount - 1, ch2.comparisonsCount - 1))):
-                ch2gene = random.randint(0, ch2.comparisonsCount - 1)
-                while ch2gene in ch2genUsed:
-                    ch2gene = random.randint(0, ch2.comparisonsCount - 1)
-                ch2genUsed.append(ch2gene)
+            if(i in range(min(ch1.comparisonsCount, ch2.comparisonsCount))):
+                random.shuffle(ch2genAvaliable)
+                ch2gene = ch2genAvaliable[0]
+                ch2genAvaliable.pop(0)
 
                 # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
                 newCh1.setAlpha(i, ch1.getAlpha(i))
@@ -89,8 +92,10 @@ class Chromosome:
                 # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
 
                 # set genes
-                newCh1.setGene1(i, ch1.getGene1(i))
-                newCh1.setGene2(i, ch1.getGene2(i))
+                genNum1 = random.randint(0, 1)
+                genNum2 = random.randint(0, 1)
+                newCh1.setGene1(i, ch1.mixGene(i, genNum1, ch2, ch2gene, genNum2))
+                newCh1.setGene2(i, ch1.mixGene(i, (genNum1 + 1) % 2, ch2, ch2gene, (genNum2 + 1) % 2))
 
                 # set comp
                 if(i % 2 == 1):
@@ -99,7 +104,7 @@ class Chromosome:
                     newCh1.setComp(i, ch2.getComp(ch2gene))
 
             else:  # when child have more genes than single parent then take rest of its genes from closest parent
-                ch1i = i % ch1.comparisonsCount
+                ch1i = i % ch1.comparisonsCount # tu można ew losować
 
                 # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
                 newCh1.setAlpha(i, ch1.getAlpha(ch1i))
@@ -113,14 +118,17 @@ class Chromosome:
                 # set comp
                 newCh1.setComp(i, ch1.getComp(ch1i))
 
-        newCh2 = Chromosome(self.config, random.randint(1, int((ch1.comparisonsCount + ch2.comparisonsCount) / 2)))
-        ch1genUsed = []
+        newCh2 = Chromosome(self.config, random.randint(1, ch1.comparisonsCount + ch2.comparisonsCount))
+        ch1genAvaliable = []
+
+        for ch1number in range(ch1.comparisonsCount):
+            ch1genAvaliable.append(ch1number)
+
         for i in range(0, newCh2.comparisonsCount):
-            if(i in range(min(ch1.comparisonsCount - 1, ch2.comparisonsCount - 1))):
-                ch1gene = random.randint(0, ch1.comparisonsCount - 1)
-                while ch1gene in ch1genUsed:
-                    ch1gene = random.randint(0, ch1.comparisonsCount - 1)
-                ch1genUsed.append(ch1gene)
+            if(i in range(min(ch1.comparisonsCount, ch2.comparisonsCount))):
+                random.shuffle(ch1genAvaliable)
+                ch1gene = ch1genAvaliable[0]
+                ch1genAvaliable.pop(0)
 
                 # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
                 newCh2.setAlpha(i, ch2.getAlpha(i))
@@ -128,8 +136,10 @@ class Chromosome:
                 # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
 
                 # set genes
-                newCh2.setGene1(i, ch2.getGene1(i))
-                newCh2.setGene2(i, ch1.getGene2(i))
+                genNum1 = random.randint(0, 1)
+                genNum2 = random.randint(0, 1)
+                newCh2.setGene1(i, ch2.mixGene(i, genNum1, ch1, ch1gene, genNum2))
+                newCh2.setGene2(i, ch2.mixGene(i, (genNum1 + 1) % 2, ch1, ch1gene, (genNum2 + 1) % 2))
 
                 # set comp
                 if(i % 2 == 0):
@@ -138,7 +148,7 @@ class Chromosome:
                     newCh2.setComp(i, ch1.getComp(ch1gene))
 
             else:  # when child have more genes than single parent then take rest of its genes from closest parent
-                ch2i = i % ch2.comparisonsCount
+                ch2i = i % ch2.comparisonsCount # tu można ew losować
 
                 # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
                 newCh2.setAlpha(i, ch2.getAlpha(ch2i))
@@ -172,6 +182,32 @@ class Chromosome:
         offset += self.config.alphaLength + self.config.betaLength
         gene = self.genes[offset: offset + self.config.geneLength]
         return ListIntConverter.List2Int(gene)
+    
+    def mixGene(self, comparisonNum1, genNum1, ch2, comparisonNum2, genNum2):
+        offset1 = self.comparisonLength * comparisonNum1
+        offset1 += self.config.alphaLength + self.config.betaLength
+        
+        if(genNum1 == 1):
+            offset1 += self.config.geneLength + self.config.compLength
+
+        gene1 = self.genes[offset1: offset1 + self.config.geneLength]
+
+        offset2 = ch2.comparisonLength * comparisonNum2
+        offset2 += ch2.config.alphaLength + ch2.config.betaLength
+        
+        if(genNum2 == 1):
+            offset2 += ch2.config.geneLength + ch2.config.compLength
+
+        gene2 = ch2.genes[offset2: offset2 + ch2.config.geneLength]
+
+        cut = random.randint(int(self.config.geneLength * 0.25), self.config.geneLength - 1)
+        newGene = []
+        for i in range(0, cut):
+            newGene.append(gene1[i])
+        for i in range(cut + 1, self.config.geneLength):
+            newGene.append(gene2[i])
+
+        return ListIntConverter.List2Int(newGene)
 
     def getGene2(self, comparisonNum):
         offset = self.comparisonLength * comparisonNum

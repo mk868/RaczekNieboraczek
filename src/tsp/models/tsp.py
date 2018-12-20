@@ -108,6 +108,6 @@ class TSP(object):
             class1Sum += personFitness / alfaSum
         resultClass1 = class1Sum / self.rowsForClasses[self.classes[1].name]
 
-        return abs((resultClass0 - resultClass1) - (self.gamma * len(data))) # range: 0..1   (0-100%)
+        return max(abs((resultClass0 - resultClass1)) - (self.gamma * (len(data) - 1)), 0)# range: 0..1   (0-100%)
                     
   

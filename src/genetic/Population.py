@@ -45,14 +45,11 @@ class Population:
 
             # best subject is automaticly taken to selection
             newChromosomes = [self.chromosomes[0]]
-            alreadyTakenChromosomes = []
 
             for sel in range(1, selectionSize):  # roulete selection
                 lottery = roulete[random.randint(1, len(roulete) - 2)]
-                while lottery in alreadyTakenChromosomes:
-                    lottery = roulete[random.randint(0, len(roulete) - 1)]
-                    
-                alreadyTakenChromosomes.append(lottery)
+                roulete.remove(lottery)
+
                 newChromosomes.append(self.chromosomes[lottery])
 
             self.chromosomes = newChromosomes
@@ -77,16 +74,17 @@ class Population:
 
         # cross v2
         chromosomesSize = len(self.chromosomes)
-        alreadyCrossed = []
+        chromosomeAvaliable = []
+        for chromosomeNumber in range(chromosomesSize):
+            chromosomeAvaliable.append(chromosomeNumber)
         for i in range(0, chromosomesSize, 1):
-            if(i in alreadyCrossed):
+            if(i not in chromosomeAvaliable):
                 continue
 
-            alreadyCrossed.append(i)
-            partner = random.randint(i + 1, chromosomesSize - 1)
-            while partner in alreadyCrossed:
-                partner = random.randint(i + 1, chromosomesSize - 1)
-            alreadyCrossed.append(partner)
+            chromosomeAvaliable.remove(i)
+            random.shuffle(chromosomeAvaliable)
+            partner = chromosomeAvaliable[0]
+            chromosomeAvaliable.pop(0)
 
             ch1 = self.chromosomes[i]
             ch2 = self.chromosomes[partner]

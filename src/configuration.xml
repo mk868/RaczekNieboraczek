@@ -29,7 +29,7 @@
      <length>1</length><!-- max length of bin representation -->
    </comparison>
    <evolution>
-      <length>10000</length>
+      <length>1000</length>
    </evolution>
   <defaultFilePath>
     <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>
