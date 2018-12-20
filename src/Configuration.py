@@ -4,13 +4,14 @@ class Configuration:
     def __init__(self):
         self.populationSize = 0
         self.selectionSize = 0
+        self.selectionType = "ranking"
         self.mutationProbability = 0.0
         self.crossingProbability = 0.0
         self.alphaInitValue = 0
         self.alphaLength = 0
         self.betaInitValue = 0
         self.betaLength = 0
-        self.GAMMA = 0.0 #TODO
+        self.gamma = 0.0 #TODO
         self.comparisonsCount = 0
         self.targetProbability = 0.0
         self.evolutionLength = 0
@@ -23,7 +24,7 @@ class Configuration:
         ''' genetic params '''
         self.populationSize = int(root.find('population').find('size').text)
         self.selectionSize = int(root.find('selection').find('size').text)
-        #SELECTION_TYPE = root.find('selection').find('type').text #TODO
+        self.selectionType = root.find('selection').find('type').text
         
         self.mutationProbability = float(root.find('mutation').find('propability').text)
         self.crossingProbability = float(root.find('crossing').find('propability').text)
@@ -36,7 +37,7 @@ class Configuration:
         self.betaInitValue = int(root.find('beta').find('initValue').text)
         self.betaLength = int(root.find('beta').find('length').text)
         
-        self.GAMMA = float(root.find('gamma').text) #TODO
+        self.gamma = float(root.find('gamma').text) #TODO
         self.comparisonsCount = int(root.find('comparison').find('count').text)
         self.compLength = int(root.find('comparison').find('length').text)
         

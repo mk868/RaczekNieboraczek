@@ -16,13 +16,13 @@
    </selection>
    <alpha>
       <initValue>1</initValue>
-      <length>10</length><!-- max length of bin representation -->
+      <length>1</length><!-- max length of bin representation -->
    </alpha>
    <beta>
       <initValue>0</initValue>
-      <length>10</length><!-- max length of bin representation -->
+      <length>1</length><!-- max length of bin representation -->
    </beta>
-   <gamma>0.01</gamma>
+   <gamma>0.1</gamma>
    <target>0.98</target>
    <comparison>
 	  <count>5</count>

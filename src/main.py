@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
 if not os.path.exists(filePath):
      raise Exception('File does not exists')
   
-TSP = TSP(filePath)
+TSP = TSP(filePath, config.gamma)
 TSP.buildClassifier(TSP.instances)
 
 chromosomeConfig = ChromosomeConfig()
@@ -29,7 +29,7 @@ chromosomeConfig.betaInitValue = config.betaInitValue
 chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) #+ 1
 chromosomeConfig.compLength = config.compLength
 
-population = Population(config.populationSize)
+population = Population(config.populationSize, config.selectionType)
 
 population.setQualityChecker(TSP.checkFitness)
 population.fillRandomly(chromosomeConfig, config.comparisonsCount)

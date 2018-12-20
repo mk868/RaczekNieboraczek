@@ -5,9 +5,9 @@ import math
 
 class TSP(object):
     classes = []
-    def __init__(self,path):
-         self.instances = tsp.models.fildereader.load_data(path)
-        
+    def __init__(self,path, gamma):
+        self.instances = tsp.models.fildereader.load_data(path)
+        self.gamma = gamma
 
 
     def buildClassifier(self, instances):
@@ -108,6 +108,6 @@ class TSP(object):
             class1Sum += personFitness / alfaSum
         resultClass1 = class1Sum / self.rowsForClasses[self.classes[1].name]
 
-        return abs(resultClass0 - resultClass1) # range: 0..1   (0-100%)
+        return abs((resultClass0 - resultClass1) - (self.gamma * len(data))) # range: 0..1   (0-100%)
                     
   
