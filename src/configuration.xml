@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-   <population>
-      <size>20</size>
-   </population>
    <mutation>
       <propability>0.1</propability>
    </mutation>
@@ -10,7 +7,7 @@
       <propability>0.7</propability>
    </crossing>
    <selection>
-      <size>10</size>
+      <size>100</size>
       <type>rulete</type>
       <!-- rulete, tournament, ranking -->
    </selection>
@@ -29,7 +26,7 @@
      <length>1</length><!-- max length of bin representation -->
    </comparison>
    <evolution>
-      <length>1000</length>
+      <length>500</length>
    </evolution>
   <defaultFilePath>
     <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>

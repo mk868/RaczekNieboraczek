@@ -26,10 +26,10 @@ chromosomeConfig.alphaLength = config.alphaLength
 chromosomeConfig.alphaInitValue = config.alphaInitValue
 chromosomeConfig.betaLength = config.betaLength
 chromosomeConfig.betaInitValue = config.betaInitValue
-chromosomeConfig.geneLength = math.floor(math.log2(TSP.instances.numAttributes())) #+ 1
+chromosomeConfig.geneLength = math.floor(math.log2(TSP.maxValueOfGene)) #+ 1
 chromosomeConfig.compLength = config.compLength
 
-population = Population(config.populationSize, config.selectionType)
+population = Population(config.selectionSize, config.selectionType)
 
 population.setQualityChecker(TSP.checkFitness)
 population.fillRandomly(chromosomeConfig, config.comparisonsCount)
@@ -38,7 +38,7 @@ population.fillRandomly(chromosomeConfig, config.comparisonsCount)
 start_time = time.time()
 #population.print()
 for i in range(0, config.evolutionLength):
-    population.nextGeneration(config.selectionSize, config.crossingProbability, config.mutationProbability)
+    population.nextGeneration(config.crossingProbability, config.mutationProbability)
     if population.isFound(config.targetProbability):
         break
 #population.print()

@@ -1,6 +1,7 @@
 import random
 from .Chromosome import Chromosome
 
+
 class Population:
 
     def __init__(self, size, selectionType):
@@ -25,52 +26,12 @@ class Population:
     def sort(self):
         self.chromosomes.sort(key=lambda x: x.quality, reverse=True)
 
-    def nextGeneration(self, selectionSize, crossProbability, mutationProbability):
+    def nextGeneration(self, crossProbability, mutationProbability):
         self.generation += 1
-
-        # selection
-        if(self.selectionType == "ranking"):
-            while len(self.chromosomes) > selectionSize:
-                self.chromosomes.pop()
-        else:  # roulete
-            steps = 0
-            roulete = []
-            chromosomeCount = len(self.chromosomes)
-
-            for i in range(1, chromosomeCount - 1):  # roulete generation
-                steps += chromosomeCount - i
-                for j in range(steps - (chromosomeCount - i), steps):
-                    roulete.append(i)
-            random.shuffle(roulete)
-
-            # best subject is automaticly taken to selection
-            newChromosomes = [self.chromosomes[0]]
-
-            for sel in range(1, selectionSize):  # roulete selection
-                lottery = roulete[random.randint(1, len(roulete) - 2)]
-                roulete.remove(lottery)
-
-                newChromosomes.append(self.chromosomes[lottery])
-
-            self.chromosomes = newChromosomes
 
         # mutation
         for chromosome in self.chromosomes:
             chromosome.mutate(mutationProbability)
-
-        # cross v1
-        # chromosomesSize = len(self.chromosomes)
-        # for i in range(0, chromosomesSize, 2):
-        #     ch1 = self.chromosomes[i]
-        #     ch2 = self.chromosomes[i + 1]
-
-        #     if(random.random() >= crossProbability):
-        #         continue
-
-        #     children = ch1.cross(ch2)
-
-        #     self.chromosomes.append(children[0])
-        #     self.chromosomes.append(children[1])
 
         # cross v2
         chromosomesSize = len(self.chromosomes)
@@ -94,10 +55,36 @@ class Population:
 
             children = ch1.cross(ch2)
 
-            self.chromosomes.append(children[0])
-            self.chromosomes.append(children[1])
+            self.chromosomes[i] = children[0]
+            self.chromosomes[partner] = children[1]
 
         self.checkQuality()
+        self.sort()
+
+        # selection
+        if(self.selectionType == "ranking"):
+            while len(self.chromosomes) > self.size:
+                self.chromosomes.pop()
+        else:  # roulete # TODO ruletka do innej klasy wywalić unikalność
+            steps = 0
+            roulete = []
+            chromosomeCount = len(self.chromosomes)
+
+            for i in range(0, chromosomeCount - 1):  # roulete generation
+                steps += chromosomeCount - i
+                for j in range(steps - (chromosomeCount - i), steps):
+                    roulete.append(i)
+            random.shuffle(roulete)
+
+            # best subject is automaticly taken to selection
+            newChromosomes = [self.chromosomes[0]]
+
+            for sel in range(1, self.size):  # roulete selection
+                lottery = roulete[random.randint(0, len(roulete) - 1)]
+                newChromosomes.append(self.chromosomes[lottery])
+
+            self.chromosomes = newChromosomes
+        
         self.sort()
 
     def mutate(self, probability):

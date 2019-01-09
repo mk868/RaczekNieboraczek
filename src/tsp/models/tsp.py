@@ -8,6 +8,7 @@ class TSP(object):
     def __init__(self,path, gamma):
         self.instances = tsp.models.fildereader.load_data(path)
         self.gamma = gamma
+        self.maxValueOfGene = self.instances.numAttributes()
 
 
     def buildClassifier(self, instances):
@@ -69,8 +70,10 @@ class TSP(object):
         for comparison in data:
             gene1 = comparison['gene1']
             gene2 = comparison['gene2']
-            if gene1 > len(self.instances.instances[0].args) or gene2 > len(self.instances.instances[0].args): 
-                return 0
+            if gene1 > len(self.instances.instances[0].args):
+                gene1 = self.maxValueOfGene
+            if gene2 > len(self.instances.instances[0].args): 
+                gene2 = self.maxValueOfGene
             
         class0Sum = 0
         rowsIndexesForClasses = self.instances.getRowsIndexesForClass(self.classes)

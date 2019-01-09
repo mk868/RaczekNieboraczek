@@ -45,6 +45,7 @@ class Chromosome:
             if random.random() < probability:
                 self.genes[i] = not(self.genes[i])
 
+        # TODO mutacja alfy i bety do całkowitej zmiany
         ''' init default alpha & beta '''   # póki nie poprawimy bet i alf to zostawiamy je domyślne !!!!!
         for i in range(0, self.comparisonsCount):
             self.setAlpha(i, self.config.alphaInitValue)
@@ -70,97 +71,43 @@ class Chromosome:
 
     #     return (newCh1, newCh2)
 
-    # cross v2
+    # cross v3
     def cross(self, ch2):
         ch1 = self
+        ch1Cut = random.randint(1, ch1.comparisonsCount)
+        ch2Cut = random.randint(1, ch2.comparisonsCount)
+        ch1NewLength = (ch1.comparisonsCount - ch1Cut) + \
+            (ch2.comparisonsCount - ch2Cut)
+        ch2NewLength = ch1Cut + ch2Cut
 
-        newCh1 = Chromosome(self.config, random.randint(1, ch1.comparisonsCount + ch2.comparisonsCount))
-        ch2genAvaliable = []
+        gn = 0
+        newCh2 = Chromosome(self.config, ch2NewLength)
+        for i in range(0, ch2Cut):
+            newCh2.setPair(gn, ch2.getPair(i))
+            newCh2.setAlpha(gn, newCh2.config.alphaInitValue)
+            newCh2.setBeta(gn, newCh2.config.betaInitValue)
+            gn += 1
+        for i in range(0, ch1Cut):
+            newCh2.setPair(gn, ch1.getPair(i))
+            newCh2.setAlpha(gn, newCh2.config.alphaInitValue)
+            newCh2.setBeta(gn, newCh2.config.betaInitValue)
+            gn += 1
 
-        for ch2number in range(ch2.comparisonsCount):
-            ch2genAvaliable.append(ch2number)
+        if(ch1NewLength == 0):
+            return (ch1, newCh2)
 
-        for i in range(0, newCh1.comparisonsCount):
-            if(i in range(min(ch1.comparisonsCount, ch2.comparisonsCount))):
-                random.shuffle(ch2genAvaliable)
-                ch2gene = ch2genAvaliable[0]
-                ch2genAvaliable.pop(0)
-
-                # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
-                newCh1.setAlpha(i, ch1.getAlpha(i))
-                newCh1.setBeta(i, ch1.getBeta(i))
-                # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
-
-                # set genes
-                genNum1 = random.randint(0, 1)
-                genNum2 = random.randint(0, 1)
-                newCh1.setGene1(i, ch1.mixGene(i, genNum1, ch2, ch2gene, genNum2))
-                newCh1.setGene2(i, ch1.mixGene(i, (genNum1 + 1) % 2, ch2, ch2gene, (genNum2 + 1) % 2))
-
-                # set comp
-                if(i % 2 == 1):
-                    newCh1.setComp(i, ch1.getComp(i))
-                else:
-                    newCh1.setComp(i, ch2.getComp(ch2gene))
-
-            else:  # when child have more genes than single parent then take rest of its genes from closest parent
-                ch1i = i % ch1.comparisonsCount # tu można ew losować
-
-                # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
-                newCh1.setAlpha(i, ch1.getAlpha(ch1i))
-                newCh1.setBeta(i, ch1.getBeta(ch1i))
-                # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
-
-                # set genes
-                newCh1.setGene1(i, ch1.getGene1(ch1i))
-                newCh1.setGene2(i, ch1.getGene2(ch1i))
-
-                # set comp
-                newCh1.setComp(i, ch1.getComp(ch1i))
-
-        newCh2 = Chromosome(self.config, random.randint(1, ch1.comparisonsCount + ch2.comparisonsCount))
-        ch1genAvaliable = []
-
-        for ch1number in range(ch1.comparisonsCount):
-            ch1genAvaliable.append(ch1number)
-
-        for i in range(0, newCh2.comparisonsCount):
-            if(i in range(min(ch1.comparisonsCount, ch2.comparisonsCount))):
-                random.shuffle(ch1genAvaliable)
-                ch1gene = ch1genAvaliable[0]
-                ch1genAvaliable.pop(0)
-
-                # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
-                newCh2.setAlpha(i, ch2.getAlpha(i))
-                newCh2.setBeta(i, ch1.getBeta(i))
-                # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
-
-                # set genes
-                genNum1 = random.randint(0, 1)
-                genNum2 = random.randint(0, 1)
-                newCh2.setGene1(i, ch2.mixGene(i, genNum1, ch1, ch1gene, genNum2))
-                newCh2.setGene2(i, ch2.mixGene(i, (genNum1 + 1) % 2, ch1, ch1gene, (genNum2 + 1) % 2))
-
-                # set comp
-                if(i % 2 == 0):
-                    newCh2.setComp(i, ch2.getComp(i))
-                else:
-                    newCh2.setComp(i, ch1.getComp(ch1gene))
-
-            else:  # when child have more genes than single parent then take rest of its genes from closest parent
-                ch2i = i % ch2.comparisonsCount # tu można ew losować
-
-                # ALFY I BETY DO ZMIANY JAK JE OGARNIEMY !!!!
-                newCh2.setAlpha(i, ch2.getAlpha(ch2i))
-                newCh2.setBeta(i, ch2.getBeta(ch2i))
-                # POKI CO BEZ ZNACZENIA BO TO STALE !!!!
-
-                # set genes
-                newCh2.setGene1(i, ch2.getGene1(ch2i))
-                newCh2.setGene2(i, ch2.getGene2(ch2i))
-
-                # set comp
-                newCh2.setComp(i, ch2.getComp(ch2i))
+        gn = 0
+        newCh1 = Chromosome(self.config, ch1NewLength)
+        for i in range(ch2Cut, ch2.comparisonsCount):
+            newCh1.setPair(gn, ch2.getPair(i))
+            newCh1.setAlpha(gn, newCh1.config.alphaInitValue)
+            newCh1.setBeta(gn, newCh1.config.betaInitValue)
+            gn += 1
+        for i in range(ch1Cut, ch1.comparisonsCount):
+            newCh1.setPair(gn, ch1.getPair(i))
+            newCh1.setAlpha(gn, newCh1.config.alphaInitValue)
+            newCh1.setBeta(gn, newCh1.config.betaInitValue)
+            gn += 1
 
         return (newCh1, newCh2)
 
@@ -182,32 +129,6 @@ class Chromosome:
         offset += self.config.alphaLength + self.config.betaLength
         gene = self.genes[offset: offset + self.config.geneLength]
         return ListIntConverter.List2Int(gene)
-    
-    def mixGene(self, comparisonNum1, genNum1, ch2, comparisonNum2, genNum2):
-        offset1 = self.comparisonLength * comparisonNum1
-        offset1 += self.config.alphaLength + self.config.betaLength
-        
-        if(genNum1 == 1):
-            offset1 += self.config.geneLength + self.config.compLength
-
-        gene1 = self.genes[offset1: offset1 + self.config.geneLength]
-
-        offset2 = ch2.comparisonLength * comparisonNum2
-        offset2 += ch2.config.alphaLength + ch2.config.betaLength
-        
-        if(genNum2 == 1):
-            offset2 += ch2.config.geneLength + ch2.config.compLength
-
-        gene2 = ch2.genes[offset2: offset2 + ch2.config.geneLength]
-
-        cut = random.randint(int(self.config.geneLength * 0.25), self.config.geneLength - 1)
-        newGene = []
-        for i in range(0, cut):
-            newGene.append(gene1[i])
-        for i in range(cut + 1, self.config.geneLength):
-            newGene.append(gene2[i])
-
-        return ListIntConverter.List2Int(newGene)
 
     def getGene2(self, comparisonNum):
         offset = self.comparisonLength * comparisonNum
@@ -223,6 +144,11 @@ class Chromosome:
         comp = self.genes[offset: offset + self.config.compLength]
         compNum = ListIntConverter.List2Int(comp)
         return self.comps[compNum % len(self.comps)]
+
+    def getPair(self, comparisonNum):
+        offset = self.comparisonLength * comparisonNum
+        gene = self.genes[offset: offset + self.comparisonLength]
+        return ListIntConverter.List2Int(gene)
 
     ''' setters '''
 
@@ -260,6 +186,12 @@ class Chromosome:
             self.config.betaLength + self.config.geneLength
         binValue = ListIntConverter.Int2List(
             self.comps.index(value), self.config.compLength)
+        for i in range(0, len(binValue)):
+            self.genes[offset + i] = binValue[i]
+
+    def setPair(self, comparisonNum, value):
+        offset = self.comparisonLength * comparisonNum
+        binValue = ListIntConverter.Int2List(value, self.comparisonLength)
         for i in range(0, len(binValue)):
             self.genes[offset + i] = binValue[i]
 

@@ -2,7 +2,6 @@ import xml.etree.ElementTree as ET
 
 class Configuration:
     def __init__(self):
-        self.populationSize = 0
         self.selectionSize = 0
         self.selectionType = "ranking"
         self.mutationProbability = 0.0
@@ -22,7 +21,6 @@ class Configuration:
         root = tree.getroot()
 
         ''' genetic params '''
-        self.populationSize = int(root.find('population').find('size').text)
         self.selectionSize = int(root.find('selection').find('size').text)
         self.selectionType = root.find('selection').find('type').text
         
