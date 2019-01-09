@@ -29,10 +29,6 @@ class Population:
     def nextGeneration(self, crossProbability, mutationProbability):
         self.generation += 1
 
-        # mutation
-        for chromosome in self.chromosomes:
-            chromosome.mutate(mutationProbability)
-
         # cross v2
         chromosomesSize = len(self.chromosomes)
         chromosomeAvaliable = []
@@ -55,8 +51,15 @@ class Population:
 
             children = ch1.cross(ch2)
 
-            self.chromosomes[i] = children[0]
-            self.chromosomes[partner] = children[1]
+            self.chromosomes.append(children[0])
+            self.chromosomes.append(children[1])
+
+        # mutation
+        newChromosomes = []
+        for chromosome in self.chromosomes:
+            newChromosomes.append(chromosome)
+            newChromosomes.append(chromosome.mutate(mutationProbability))
+        self.chromosomes = newChromosomes
 
         self.checkQuality()
         self.sort()
@@ -114,3 +117,4 @@ class Population:
         bestChromosome = self.chromosomes[0]
         print(' Best Chromosome ' + str(bestChromosome.toReadableForm()
                                         ) + ' Quality: ' + str(bestChromosome.quality))
+        return bestChromosome

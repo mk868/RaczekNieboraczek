@@ -15,7 +15,9 @@ class Configuration:
         self.targetProbability = 0.0
         self.evolutionLength = 0
         self.defaultFilePath = 'Init'
+        self.defaultTestFilePath = 'Init'
         self.compLength = 1
+        
     def load(self, file):    
         tree = ET.parse(file)
         root = tree.getroot()
@@ -45,3 +47,4 @@ class Configuration:
         
         ''' data file '''
         self.defaultFilePath = root.find('defaultFilePath').find('path').text
+        self.defaultTestFilePath = root.find('defaultTestFilePath').find('path').text

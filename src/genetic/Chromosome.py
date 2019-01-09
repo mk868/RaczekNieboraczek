@@ -41,15 +41,23 @@ class Chromosome:
             self.setBeta(i, self.config.betaInitValue)
 
     def mutate(self, probability):
-        for i in range(0, self.totalSize):
+        clone = Chromosome(self.config, self.comparisonsCount)
+        for i in range(0, self.comparisonsCount):
+            clone.setPair(i, self.getPair(i))
+            clone.setAlpha(i, self.config.alphaInitValue)
+            clone.setBeta(i, self.config.betaInitValue)
+
+        for i in range(0, clone.totalSize):
             if random.random() < probability:
-                self.genes[i] = not(self.genes[i])
+                clone.genes[i] = not(clone.genes[i])
 
         # TODO mutacja alfy i bety do całkowitej zmiany
         ''' init default alpha & beta '''   # póki nie poprawimy bet i alf to zostawiamy je domyślne !!!!!
-        for i in range(0, self.comparisonsCount):
-            self.setAlpha(i, self.config.alphaInitValue)
-            self.setBeta(i, self.config.betaInitValue)
+        for i in range(0, clone.comparisonsCount):
+            clone.setAlpha(i, clone.config.alphaInitValue)
+            clone.setBeta(i, clone.config.betaInitValue)
+            
+        return clone
 
     # cross v1
     # def cross(self, ch2):

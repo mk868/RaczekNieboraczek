@@ -29,6 +29,9 @@
       <length>500</length>
    </evolution>
   <defaultFilePath>
-    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_train.csv</path>
   </defaultFilePath>
+  <defaultTestFilePath>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>
+  </defaultTestFilePath>
 </configuration>
