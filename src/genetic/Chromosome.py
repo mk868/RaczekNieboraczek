@@ -41,45 +41,26 @@ class Chromosome:
             self.setBeta(i, self.config.betaInitValue)
 
     def mutate(self, probability):
+        for i in range(0, self.totalSize):
+            if random.random() < probability:
+                self.genes[i] = not(self.genes[i])
+
+        # TODO mutacja alfy i bety do całkowitej zmiany
+        ''' init default alpha & beta '''   # póki nie poprawimy bet i alf to zostawiamy je domyślne !!!!!
+        for i in range(0, self.comparisonsCount):
+            self.setAlpha(i, self.config.alphaInitValue)
+            self.setBeta(i, self.config.betaInitValue)
+
+    def clone(self):
         clone = Chromosome(self.config, self.comparisonsCount)
         for i in range(0, self.comparisonsCount):
             clone.setPair(i, self.getPair(i))
             clone.setAlpha(i, self.config.alphaInitValue)
             clone.setBeta(i, self.config.betaInitValue)
-
-        for i in range(0, clone.totalSize):
-            if random.random() < probability:
-                clone.genes[i] = not(clone.genes[i])
-
-        # TODO mutacja alfy i bety do całkowitej zmiany
-        ''' init default alpha & beta '''   # póki nie poprawimy bet i alf to zostawiamy je domyślne !!!!!
-        for i in range(0, clone.comparisonsCount):
-            clone.setAlpha(i, clone.config.alphaInitValue)
-            clone.setBeta(i, clone.config.betaInitValue)
-            
+        clone.quality = self.quality
         return clone
 
-    # cross v1
-    # def cross(self, ch2):
-    #     ch1 = self
-    #     newCh1 = Chromosome(self.config, self.comparisonsCount)
-    #     newCh2 = Chromosome(self.config, self.comparisonsCount)
-    #     for i in range(0, self.comparisonsCount):
-    #         newCh1.setAlpha(i, ch1.getAlpha(i))
-    #         newCh1.setBeta(i, ch2.getBeta(i))
-    #         newCh1.setGene1(i, ch1.getGene1(i))
-    #         newCh1.setComp(i, ch1.getComp(i))
-    #         newCh1.setGene2(i, ch2.getGene2(i))
-
-    #         newCh2.setAlpha(i, ch2.getAlpha(i))
-    #         newCh2.setBeta(i, ch1.getBeta(i))
-    #         newCh2.setGene1(i, ch2.getGene1(i))
-    #         newCh2.setComp(i, ch2.getComp(i))
-    #         newCh2.setGene2(i, ch1.getGene2(i))
-
-    #     return (newCh1, newCh2)
-
-    # cross v3
+    # cross
     def cross(self, ch2):
         ch1 = self
         ch1Cut = random.randint(1, ch1.comparisonsCount)
@@ -220,25 +201,3 @@ class Chromosome:
 
     def __str__(self):
         return str(self.genes)
-
-
-if __name__ == '__main__':  # test
-    ch = Chromosome(4)
-    ch.fillRandomly()
-    print('ch1:')
-    print(ch)
-    print(ch.toReadableForm())
-
-    ch2 = Chromosome(4)
-    ch2.fillRandomly()
-    print('ch2:')
-    print(ch2)
-    print(ch2.toReadableForm())
-
-    chNew = ch.cross(ch2)
-    print('chNew[0]:')
-    print(chNew[0])
-    print(chNew[0].toReadableForm())
-    print('chNew[1]:')
-    print(chNew[1])
-    print(chNew[1].toReadableForm())

@@ -36,12 +36,13 @@ population = Population(config.selectionSize, config.selectionType)
 
 population.setQualityChecker(TSP1.checkFitness)
 population.fillRandomly(chromosomeConfig, config.comparisonsCount)
-
+config.mutationProbability = (1 / chromosomeConfig.geneLength) + (config.mutationProbability * (1 / chromosomeConfig.geneLength))
 
 start_time = time.time()
+best = None
 #population.print()
 for i in range(0, config.evolutionLength):
-    population.nextGeneration(config.crossingProbability, config.mutationProbability)
+    best = population.nextGeneration(config.crossingProbability, config.mutationProbability, best)
     if population.isFound(config.targetProbability):
         break
 #population.print()

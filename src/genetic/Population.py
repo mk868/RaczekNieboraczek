@@ -26,8 +26,12 @@ class Population:
     def sort(self):
         self.chromosomes.sort(key=lambda x: x.quality, reverse=True)
 
-    def nextGeneration(self, crossProbability, mutationProbability):
+    def nextGeneration(self, crossProbability, mutationProbability, previousBest):
         self.generation += 1
+        best = self.chromosomes[0].clone()
+
+        if((previousBest is None) or (best.quality > previousBest.quality)):
+            print("New Best Quality - " + str(best.quality) + " Generation - " + str(self.generation) + " Chromosome Length - " + str(best.comparisonsCount))
 
         # cross v2
         chromosomesSize = len(self.chromosomes)
@@ -51,16 +55,17 @@ class Population:
 
             children = ch1.cross(ch2)
 
-            self.chromosomes.append(children[0])
-            self.chromosomes.append(children[1])
+            self.chromosomes[i] = children[0]
+            self.chromosomes[partner] = children[1]
 
         # mutation
-        newChromosomes = []
         for chromosome in self.chromosomes:
-            newChromosomes.append(chromosome)
-            newChromosomes.append(chromosome.mutate(mutationProbability))
-        self.chromosomes = newChromosomes
+            chromosome.mutate(mutationProbability)
 
+        self.checkQuality()
+        self.sort()
+
+        self.chromosomes[self.size - 1] = best
         self.checkQuality()
         self.sort()
 
@@ -68,7 +73,7 @@ class Population:
         if(self.selectionType == "ranking"):
             while len(self.chromosomes) > self.size:
                 self.chromosomes.pop()
-        else:  # roulete # TODO ruletka do innej klasy wywalić unikalność
+        else:  # roulete # TODO ruletka do innej klasy
             steps = 0
             roulete = []
             chromosomeCount = len(self.chromosomes)
@@ -89,6 +94,7 @@ class Population:
             self.chromosomes = newChromosomes
         
         self.sort()
+        return best
 
     def mutate(self, probability):
         for chromosome in self.chromosomes:

@@ -19,19 +19,19 @@
       <initValue>0</initValue>
       <length>1</length><!-- max length of bin representation -->
    </beta>
-   <gamma>0.1</gamma>
+   <gamma>0.01</gamma>
    <target>0.98</target>
    <comparison>
 	  <count>5</count>
      <length>1</length><!-- max length of bin representation -->
    </comparison>
    <evolution>
-      <length>500</length>
+      <length>15000</length>
    </evolution>
   <defaultFilePath>
-    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_train.csv</path>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_07_train.csv</path>
   </defaultFilePath>
   <defaultTestFilePath>
-    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_01_test.csv</path>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_07_test.csv</path>
   </defaultTestFilePath>
 </configuration>
