@@ -173,7 +173,7 @@ class TSP(object):
             class1Sum += math.ceil(personFitness / alfaSum)
         resultClass1 = class1Sum / self.rowsForClasses[self.classes[1].name]
 
-        return abs(resultClass0 - resultClass1)) - ((self.gamma * (len(uniqueGenes))) + self.gamma * 2)
+        return abs(resultClass0 - resultClass1) - ((self.gamma * (len(uniqueGenes))) + self.gamma * 2)
 
         # result= 0
 
