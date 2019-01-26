@@ -20,8 +20,11 @@ if len(sys.argv) > 2:
 
 if not os.path.exists(filePath):
      raise Exception('File does not exists')
-  
-TSP1 = TSP(filePath, config.gamma)
+
+if(testFilePath == 'NONE'):
+    TSP1 = TSP(filePath, config.gamma, False)
+else:
+    TSP1 = TSP(filePath, config.gamma, True)
 TSP1.buildClassifier(TSP1.instances)
 
 chromosomeConfig = ChromosomeConfig()
@@ -50,6 +53,10 @@ print('Generation: ' + str(population.generation))
 best = population.printBest()
 print('TIME: ' + str(round(time.time() - start_time, 2)))
 
-TSP2 = TSP(testFilePath, config.gamma)
-TSP2.buildClassifier(TSP2.instances)
-print('Test score is: ' + str(TSP2.checkFitness(best.toReadableForm())) + '%')
+if(testFilePath == 'NONE'):
+    TSP1.buildClassifier(TSP1.test)
+    print('Test score is: ' + str(TSP1.checkFitness(best.toReadableForm())) + '%') 
+else:
+    TSP2 = TSP(testFilePath, config.gamma)
+    TSP2.buildClassifier(TSP2.instances)
+    print('Test score is: ' + str(TSP2.checkFitness(best.toReadableForm())) + '%')

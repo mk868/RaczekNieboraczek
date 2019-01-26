@@ -26,12 +26,12 @@
      <length>1</length><!-- max length of bin representation -->
    </comparison>
    <evolution>
-      <length>15000</length>
+      <length>5000</length>
    </evolution>
   <defaultFilePath>
-    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_07_train.csv</path>
+    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\07_train.csv</path>
   </defaultFilePath>
   <defaultTestFilePath>
-    <path>C:\Users\kacper.staniszewski\Desktop\RaczekNieboraczek\src\baza_07_test.csv</path>
+    <path>NONE</path>
   </defaultTestFilePath>
 </configuration>

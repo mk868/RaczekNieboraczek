@@ -48,3 +48,24 @@ class Configuration:
         ''' data file '''
         self.defaultFilePath = root.find('defaultFilePath').find('path').text
         self.defaultTestFilePath = root.find('defaultTestFilePath').find('path').text
+
+        if(self.selectionSize < 10):
+            raise ValueError('Selection size is inncorrect.')
+        if (self.selectionType != "rulete" and self.selectionType != "ranking"):
+            raise ValueError('Selection type is incorrect.')
+        if(self.mutationProbability < 0.1 or self.mutationProbability > 1):
+            raise ValueError('Mutation probability is incorrect')
+        if(self.crossingProbability < 0.2 or self.crossingProbability > 1):
+            raise ValueError('Crossing probability is incorrect')
+        if(self.compLength < 1 or self.compLength > 3):
+            raise ValueError('Comparsion length is incorrect')
+        if(self.evolutionLength < 1):
+            raise ValueError('Evolution length is incorrect')
+        if(self.targetProbability < 0):
+            raise ValueError('Target probability is incorrect')
+        if(self.comparisonsCount < 1):
+            raise ValueError('Comparsions count is incorrect')
+        if(self.alphaInitValue < 1 or self.alphaInitValue > 2):
+            raise ValueError('Alfa init value is incorrect')
+        if(self.betaInitValue < 0 or self.betaInitValue > 1):
+            raise ValueError('Beta init value is incorrect')
