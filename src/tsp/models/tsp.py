@@ -50,6 +50,7 @@ class TSP(object):
                 v = rowsIndexesForClasses[classes[i%2].name][0]
                 temp.append(self.instances.instances[v])
                 self.instances.instances.pop(v)
+                rowsIndexesForClasses = self.instances.getRowsIndexesForClass(classDictionary)
                 i+=1
         
             self.test = copy.deepcopy(self.instances)
